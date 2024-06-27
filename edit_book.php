@@ -30,37 +30,60 @@ if (isset($_GET['book_id'])) {
 <html>
 <head>
     <title>Edit Book</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Edit Book</h2>
-    <form method="post" action="">
-        <input type="hidden" name="book_id" value="<?php echo $book['book_id']; ?>">
+    <div class="container">
+        <h2 class="mb-4">Edit Book</h2>
+        <form method="post" action="">
+            <input type="hidden" name="book_id" value="<?php echo $book['book_id']; ?>">
 
-        <label for="title">Title:</label>
-        <input type="text" name="title" value="<?php echo $book['title']; ?>" required><br>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" name="title" value="<?php echo $book['title']; ?>" required>
+            </div>
 
-        <label for="author_id">Author:</label>
-        <select name="author_id">
-            <?php
-            $result = $conn->query("SELECT * FROM authors");
-            while ($row = $result->fetch_assoc()) {
-                $selected = ($row['author_id'] == $book['author_id']) ? 'selected' : '';
-                echo "<option value='" . $row['author_id'] . "' $selected>" . $row['name'] . "</option>";
-            }
-            ?>
-        </select>
-        <br>
+            <div class="form-group">
+                <label for="author_id">Author:</label>
+                <select class="form-control" id="author_id" name="author_id">
+                    <?php
+                    $result = $conn->query("SELECT * FROM authors");
+                    while ($row = $result->fetch_assoc()) {
+                        $selected = ($row['author_id'] == $book['author_id']) ? 'selected' : '';
+                        echo "<option value='" . $row['author_id'] . "' $selected>" . $row['name'] . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>
 
-        <label for="ISBN">ISBN:</label>
-        <input type="text" name="ISBN" value="<?php echo $book['ISBN']; ?>" required><br>
+            <div class="form-group">
+                <label for="ISBN">ISBN:</label>
+                <input type="text" class="form-control" id="ISBN" name="ISBN" value="<?php echo $book['ISBN']; ?>" required>
+            </div>
 
-        <label for="genre">Genre:</label>
-        <input type="text" name="genre" value="<?php echo $book['genre']; ?>"><br>
+            <div class="form-group">
+                <label for="genre">Genre:</label>
+                <input type="text" class="form-control" id="genre" name="genre" value="<?php echo $book['genre']; ?>">
+            </div>
 
-        <label for="publication_year">Publication Year:</label>
-        <input type="text" name="publication_year" value="<?php echo $book['publication_year']; ?>" required><br>
+            <div class="form-group">
+                <label for="publication_year">Publication Year:</label>
+                <input type="text" class="form-control" id="publication_year" name="publication_year" value="<?php echo $book['publication_year']; ?>" required>
+            </div>
 
-        <input type="submit" value="Update Book">
-    </form>
+            <button type="submit" class="btn btn-primary">Update Book</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

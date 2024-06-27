@@ -1,101 +1,106 @@
-<?php
-session_start();
-error_reporting(0);
-include('includes/config.php');
-if(strlen($_SESSION['login'])==0)
-  { 
-header('location:index.php');
-}
-else{?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Online Library Management System</title>
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <link href="assets/css/style.css" rel="stylesheet" />
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS (optional) -->
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
 
-<?php include('includes/header.php');?>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Online Library Management System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">DASHBOARD</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">CATEGORIES</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">AUTHORS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="view_books.php">BOOKS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">ISSUE BOOKS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">REG STUDENTS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">CHANGE PASSWORD</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-danger text-white" href="#">LOG ME OUT</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-    <div class="content-wrapper">
-         <div class="container">
-        <div class="row pad-botm">
-            <div class="col-md-12">
-                <h4 class="header-line">User DASHBOARD</h4>
-                
-                            </div>
-
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Admin Dashboard</h1>
         </div>
-             
-             <div class="row">
-
-
-<a href="listed-books.php">
-<div class="col-md-4 col-sm-4 col-xs-6">
- <div class="alert alert-success back-widget-set text-center">
- <i class="fa fa-book fa-5x"></i>
-<?php 
-$sql ="SELECT id from tblbooks ";
-$query = $dbh -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$listdbooks=$query->rowCount();
-?>
-<h3><?php echo htmlentities($listdbooks);?></h3>
-Books Listed
-</div></div></a>
-             
-               <div class="col-md-4 col-sm-4 col-xs-6">
-                      <div class="alert alert-warning back-widget-set text-center">
-                            <i class="fa fa-recycle fa-5x"></i>
-<?php 
-$rsts=0;
- $sid=$_SESSION['stdid'];
-$sql2 ="SELECT id from tblissuedbookdetails where StudentID=:sid and (RetrunStatus=:rsts || RetrunStatus is null || RetrunStatus='')";
-$query2 = $dbh -> prepare($sql2);
-$query2->bindParam(':sid',$sid,PDO::PARAM_STR);
-$query2->bindParam(':rsts',$rsts,PDO::PARAM_STR);
-$query2->execute();
-$results2=$query2->fetchAll(PDO::FETCH_OBJ);
-$returnedbooks=$query2->rowCount();
-?>
-
-                            <h3><?php echo htmlentities($returnedbooks);?></h3>
-                          Books Not Returned Yet
-                        </div>
-                    </div>
-
-<a href="issued-books.php">
-<div class="col-md-4 col-sm-4 col-xs-6">
- <div class="alert alert-success back-widget-set text-center">
- <i class="fa fa-book fa-5x"></i>
-      <h3>&nbsp;</h3>
-Issued Books
-</div></div></a>
-
-
-
-
-
-        </div>    
     </div>
+    <div class="row mt-4">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title">9</h3>
+                    <p class="card-text"><a href="view_books.php" class="text-dark">Books Listed</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title">2</h3>
+                    <p class="card-text">Books Not Returned Yet</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title">6</h3>
+                    <p class="card-text">Registered Users</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title">11</h3>
+                    <p class="card-text">Authors Listed</p>
+                </div>
+            </div>
+        </div>
     </div>
-    
-<?php include('includes/footer.php');?>
-     
-    <script src="assets/js/jquery-1.10.2.js"></script>
-    
-    <script src="assets/js/bootstrap.js"></script>
-     
-    <script src="assets/js/custom.js"></script>
+    <div class="row mt-4">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title">6</h3>
+                    <p class="card-text">Listed Categories</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-<?php } ?>
